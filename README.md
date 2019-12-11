@@ -2,11 +2,12 @@
 
 ## Log in the frontend and set up the virtual environment of Python and NEURON
 ### How to log in the frontend gwdg101 (or gwdg102, gwdg103):
-```ssh -X username@gwdu101.gwdg.de```
+1. ```ssh -X username@gwdu101.gwdg.de```
+Here username is your gwdg account name.
 
 ### How to install NEURON with Python using conda:
-1. module load conda
-2. conda create --prefix /scratch/username/nrn -c conda-forge python gcc_linux-64 neuron
+1. ```module load conda```
+2. ```conda create --prefix /scratch/username/nrn -c conda-forge python gcc_linux-64 neuron```
 
 ### How to activate NEURON with Python on gwdu101:
 1. module load conda
