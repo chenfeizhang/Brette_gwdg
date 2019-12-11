@@ -8,16 +8,17 @@ Here username is your gwdg account name.
 ### How to install NEURON with Python using conda:
 1. ```module load conda```
 2. ```conda create --prefix /scratch/username/nrn -c conda-forge python gcc_linux-64 neuron```
+Here ```/scratch/username/nrn``` is the directory of the virtual environment.
 
 ### How to activate NEURON with Python on gwdu101:
-1. module load conda
-2. source activate /scratch/chenfei/nrn
+1. ```module load conda```
+2. ```source activate /scratch/username/nrn```
 
 ### How to install python package in virtual environment:
 1. Make sure you have activated the virtual environment (see above). 
-2. conda install scipy (pip is not recommended.)
+2. ```conda install scipy``` (pip is not recommended.)
 
 ### How to login to one node and test your code (interactive queue):
-1. srun --pty -p medium -N 1 -c 1 /bin/bash
+1. ```srun --pty -p medium -N 1 -c 1 /bin/bash```
 
 ## Run Brette code with GWDG clusters
