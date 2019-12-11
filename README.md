@@ -26,6 +26,8 @@ Download the code folder ``Code_gwdg`` to your home directory.
 1. Activate the virtual environment.
 2. Go to the model directroy ```cd ~/Code_gwdg/Models/Brette```. Compile the model with the command ```nrnivmodl```, then you will get the folde ``x86_64``. If you get the code from somewhere else, the folde ``x86_64`` may already exist. Please delete the folder and compile the code to get your own folder``x86_64``.
 
+### Note: All the following steps are executed in the virtual environment. 
+
 ### 2. Determine the Axonal Voltages for Spike Time Dectection and Voltage Reset
 
 Brette's model is a simple multi-compartment model composed of a soma and an axon. Only sodium channels are located at point on the axon for spike generation (AP initiation site). The rest of the neuron model is passive. To finish a spike, the voltage values of the whole neuron model need to be reset by hand when the axonal voltage at the AP initiation site reaches some specific value. We call this value reset threshold. We choose the axonal voltage with the maximum voltage derivative for spike time dectection. We choose the axonal voltage 2ms after the spike detection voltage as the reset voltage.
@@ -39,3 +41,5 @@ Brette's model is a simple multi-compartment model composed of a soma and an axo
 Here make sure the model name in the programme ``~/Code_git/Models/Brette/x86_64/special -python`` is the same with the model being simulated (shown in the end).
 
 With the spike detection voltage, the reset threshold is temporarily set to be slightly larger in following simulations.
+
+3. Use ``param_step1_runjobs.py``, ``param_step2_runme.py`` and ``runme.sh`` to submit jobs to the clusters and find the constant input to generate 5Hz firng rate and the constant input just to trigger spikes.
