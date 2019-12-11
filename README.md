@@ -32,22 +32,47 @@ Download the code folder ``Code_gwdg`` to your home directory.
 
 Brette's model is a simple multi-compartment model composed of a soma and an axon. Only sodium channels are located at point on the axon for spike generation (AP initiation site). The rest of the neuron model is passive. To finish a spike, the voltage values of the whole neuron model need to be reset by hand when the axonal voltage at the AP initiation site reaches some specific value. We call this value reset threshold. We choose the axonal voltage with the maximum voltage derivative for spike time dectection. We choose the axonal voltage 2ms after the spike detection voltage as the reset voltage.
 
-1. Go to direcotry ```~/Code_git/Parameters```. ``model_simulation.py`` provides a function for model simulation and a function for stimulus generation. It also provides the self-test code to simulate the model. 
+In ```~/Code_gwdg/Paramters```, ``param_step1_runjobs.py`` calls ``param_step1_runme.py`` to find the constant input that is about to trigger spikes and the constant input that generates 5Hz firing rate. To find targer stimuli, we set the upper bound and lower bound of the stimuli by hand, and use middle point searching method. ``firingonset.py`` in ```~/Code_gwdg/scripts``` contains the function that implements this searching method. When the upper bound and lower bound are close enough, we assume the parameter searching is precise enough. The programme will stop and return the constant input value and the final reset threshold for later simulation.
+    
+To find target mean and std of stimulus, ``param_step2_runjobs.py`` calls ``param_step2_runme.py`` for parameter searching. In this step, it picks 200 mean values between zero and the constant input of 5Hz firing, and uses midde point searching method to find correponding std to generate 5Hz firing. ``Determinestd.py`` in ```~/Code_gwdg/scripts``` provides the function for std searching. param_step3.py summarizes the data. The mean and std that reproduce expected CV are determined by hand from the scatter plots of mean-std and mean-CV relation. Mean and std values are written in the txt file IparamTable.txt in ```~/Code_gwdg/Models/Brette```.
+
+1. Go to direcotry ```~/Code_gwdg/Parameters```. ``model_simulation.py`` provides a function for model simulation and a function for stimulus generation. It also provides the self-test code to simulate the model. 
 
 2. Set up the parameters in ``model_simulation.py`` in the self-test part. To determine the spike time dectection voltage, we first set the reset threshold ``threshold`` to 60mV. Then set ``stim_std`` to 0, and set ``stim_mean`` to a large enough value such that the axonal voltage is larger than -40mV but not larger than 60mV. The spike detection voltage is quite insensitive to the constant stimulus amplitude. Then type the following command in the terminal:
 ```
-~/Code_git/Models/Brette/x86_64/special -python model_simulation.py Brette
+~/Code_gwdg/Models/Brette/x86_64/special -python model_simulation.py Brette
 ```
-Here make sure the model name in the programme ``~/Code_git/Models/Brette/x86_64/special -python`` is the same with the model being simulated (shown in the end).
+Here make sure the model name in the programme ``~/Code_gwdg/Models/Brette/x86_64/special -python`` is the same with the model being simulated (shown in the end).
 
-With the spike detection voltage, the reset threshold is temporarily set to be slightly larger in following simulations.
+With the spike detection voltage, the reset threshold is temporarily set to be slightly larger in following simulations. 
 
-3. Use ``param_step1_runjobs.py``, ``param_step2_runme.py`` and ``runme.sh`` to submit jobs to the clusters and find the constant input that generates 5Hz firng rate and the constant input that is just to trigger spikes. In this step, the scripts also use the constant input that generates 5Hz firing rate to determine the reset threshold, and save the reset threshold to ``param.npy``.
+3. Use ``param_step1_runjobs.py``, ``param_step1_runme.py`` and ``runme.sh`` to submit jobs to the clusters and find the constant input that generates 5Hz firng rate and the constant input that is just to trigger spikes. In this step, the scripts also use the constant input that generates 5Hz firing rate to determine the reset threshold, and save the reset threshold to ``param.npy``.
 
-In ``param_step1_runjobs.py``, set your hostname and the model name. Make sure you already have created your directory on ``/scratch``. You can also set your own data folder and output file folder. 
+In ``param_step1_runjobs.py``, set your hostname and the model name. Make sure you already have created your directory on ``/scratch``. You can also set your own data folder and output file folder. Then set the parameters of the stimulus and the neuron model. ``param_step1_runjobs.py`` calls ``param_step1_runjobs.py`` and ``runme.sh`` to run the simulation.
+
+In ``param_step1_runme.py``, the script uses the function ``simulate`` and ``FiringOnset`` for parameter searching.
+
+In ``runme.sh``, the script activates the virtual environment in the cluster node, and specifies the programme used for simulation. Please change the username in ``/scratch/username/nrn``
 
 Type the following command to submit jobs:
 ```
 python param_step1_runjobs.py
 ```
+4. Use ``param_step2_runjobs.py``, ``param_step2_runme.py`` and ``runme.sh`` to submit jobs to the clusters and find the correponding std of stochastic stimulus for each mean stimulus, such that the average firing rate is 5Hz.
+
+Set the hostname and model name in ``param_step2_runjobs.py``. In ``param_step2_runme.py``, one can set the range of mean values by hand if necessary.
+
+Type the following command to submit jobs:
+```
+python param_step2_runjobs.py
+```
+
+5. Use ``param_step3.py`` to save the data generated in step 4 into one file and manually find the mean and std that reproduce target firing rate and firing pattern.
+
+Type the following command to save the data:
+```
+python param_step3.py
+```
+
+
 
