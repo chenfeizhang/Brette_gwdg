@@ -1,8 +1,8 @@
-# Brette Code Run on GWDG clusters
+# How to Run Brette Code on GWDG clusters
 
-## Login and set up virtual environment of Python and NEURON
-### How to login HPC cluster:
-ssh -X username@gwdu101.gwdg.de
+## Log in the frontend and set up the virtual environment of Python and NEURON
+### How to log in the frontend gwdg101 (or gwdg102, gwdg103):
+```ssh -X username@gwdu101.gwdg.de```
 
 ### How to install NEURON with Python using conda:
 1. module load conda
