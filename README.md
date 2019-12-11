@@ -32,7 +32,10 @@ Brette's model is a simple multi-compartment model composed of a soma and an axo
 
 1. Go to direcotry ```~/Code_git/Parameters```. ``model_simulation.py`` provides a function for model simulation and a function for stimulus generation. It also provides the self-test code to simulate the model. 
 
-2. Set up the parameters in ``model_simulation.py`` in the self-test part. To determine the spike time dectection voltage, we first set the reset threshold ``threshold`` to 60mV. Then set ``stim_std`` to 0, and set ``stim_mean`` to a large enough value such that the axonal voltage is larger than -40mV but not larger than 60mV. Then type the following command in the terminal:
-```~/Code_git/Models/Brette/x86_64/special -python model_simulation.py Brette```
+2. Set up the parameters in ``model_simulation.py`` in the self-test part. To determine the spike time dectection voltage, we first set the reset threshold ``threshold`` to 60mV. Then set ``stim_std`` to 0, and set ``stim_mean`` to a large enough value such that the axonal voltage is larger than -40mV but not larger than 60mV. The spike detection voltage is quite insensitive to the constant stimulus amplitude. Then type the following command in the terminal:
+```
+~/Code_git/Models/Brette/x86_64/special -python model_simulation.py Brette
+```
+Here make sure the model name in the programme ``~/Code_git/Models/Brette/x86_64/special -python`` is the same with the model being simulated (shown in the end).
 
-To determine spike time dectection voltage at the AP initiation site, we first set reset threshold to the reserval potential of sodium channels, which is 60mV. Injecting the soma with a constant stimulus of appropriate size, choose the axonal voltage with the maximum voltage derivative as the spike detection voltage. The stimulus size should be large enough to make axonal voltage pass half-activation voltage of sodium channels, which is -40mV. It also shouldn't be too large to make the voltage larger than the reserval potential. Spike detection voltage is quite insensitive to the constant stimulus amplitude. In fact, the axonal voltages around the spike detection voltage will usually fall in the same time bin during the simulation, which will not affect spike time detection.
+With the spike detection voltage, the reset threshold is temporarily set to be slightly larger in following simulations.
