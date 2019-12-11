@@ -42,4 +42,12 @@ Here make sure the model name in the programme ``~/Code_git/Models/Brette/x86_64
 
 With the spike detection voltage, the reset threshold is temporarily set to be slightly larger in following simulations.
 
-3. Use ``param_step1_runjobs.py``, ``param_step2_runme.py`` and ``runme.sh`` to submit jobs to the clusters and find the constant input to generate 5Hz firng rate and the constant input just to trigger spikes.
+3. Use ``param_step1_runjobs.py``, ``param_step2_runme.py`` and ``runme.sh`` to submit jobs to the clusters and find the constant input that generates 5Hz firng rate and the constant input that is just to trigger spikes. In this step, the scripts also use the constant input that generates 5Hz firing rate to determine the reset threshold, and save the reset threshold to ``param.npy``.
+
+In ``param_step1_runjobs.py``, set your hostname and the model name. Make sure you already have created your directory on ``/scratch``. You can also set your own data folder and output file folder. 
+
+Type the following command to submit jobs:
+```
+python param_step1_runjobs.py
+```
+
