@@ -1,0 +1,68 @@
+// Neuron morphology and biophysics
+
+proc celldef() {
+  topol()
+  subsets()
+  geom()
+  geom_nseg()
+  biophys()
+}
+
+create soma, axon
+
+Rm = 30000
+axon_L = 600
+v_resting = -75
+v_init = v_resting
+
+proc topol() { local i
+  connect axon(0), soma(1)
+  basic_shape()
+}
+proc basic_shape() {
+  soma {pt3dclear() pt3dadd(0, 0, 0, 1) pt3dadd(15, 0, 0, 1)}
+  axon {pt3dclear() pt3dadd(15, 0, 0, 1) pt3dadd(105, 0, 0, 1)}
+}
+
+objref all, sodiumchan
+proc subsets() {
+  objref all
+  all = new SectionList()
+    soma all.append()
+    axon all.append()
+}
+proc geom() {
+  soma {  L = 50  diam = 50  }
+  axon {  L = axon_L  diam = 1  }
+}
+proc geom_nseg() {
+   forsec all { nseg = int((L/1*1 + .999)/2)*2 + 1  }
+}
+proc biophys() {
+  forsec all {
+    insert pas
+      g_pas = 1/Rm
+      e_pas = -75
+    cm = 0.75
+    Ra = 150
+  }
+  access axon
+  sodiumchan = new NaBrette_point(posNa/axon_L)
+  sodiumchan.gnabar = 1*4.2*1e-3*1.2446   
+  sodiumchan.v_resting = v_resting
+  sodiumchan.trigger = 0
+  ena = 60 
+}
+access soma
+
+celldef()
+
+
+proc advance() {
+  if (sodiumchan.trigger == 1) {
+    forall{ v = v_resting }
+    axon{sodiumchan.m=1 / (1 + exp((-40 + 75)/6))}
+    sodiumchan.trigger = 0
+  }
+  fadvance()
+}
