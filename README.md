@@ -141,3 +141,5 @@ Type the following command to submit jobs:
 ```
 python bootstrapping_step3.py
 ```
+
+### 5. Electrotonic Filtering and Sodium Activation Variable under Voltage Clamp.
