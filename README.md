@@ -96,15 +96,26 @@ python runjobs_desktop.py
 
 2. When the simulation in 1 is finished, go to direcotry ```~/Code_gwdg/transferit```. Use ``transferit.py`` to calculate the dynamic gain function.
 
-Type the following command to submit jobs:
+Type the following command to calculate the dynamic gain function:
 ```
 python transferit.py
 ```
 
 ### 4. Bootstrapping Confidence Interval and Null Hypothesis Test.
 
-To calculate bootstrapping confidence interval, bootstrapping_runjobs.py in ```~/Code_git/transferit/``` calls bootstrapping runme. In each job, it randomly samples 400 pieces of STA data with replacement and averages them to get a new STA. Linear response curves are calculated with new STAs. There are 1000 curves generated in total. Bootstrapping boundaries are the upper bound and lower bound of middle 95 percent of these curves. bootstrapping_step2.py finds the boundary curves and writes them into the linear response curve data file.
+To calculate the bootstrapping confidence interval, ``bootstrapping_runjobs.py`` in ```~/Code_git/transferit/``` calls ``bootstrapping_runme.py``. In each job, it randomly samples 400 pieces of STA with replacement and averages them to get a new final STA. A new dynamic gain function is calculated with the new final STA. There are 1000 new curves generated in total. Bootstrapping boundaries are the upper bound and lower bound of middle 95 percent of these curves. ``bootstrapping_step2.py`` finds the boundary curves and writes them into the dynamic gain function data file.
 
-To calculate null hypothesis test curve, nullhypothesis_runjobs.py calls in ```~/Code_git/transferit/``` nullhypothesis_runme.py. In each job, it reproduces the stimuli and load corresponding spike time lists. Adding a random number to each spike time list shuffles spike time. STA data are calculated with the stimuli and new spike time lists. nullhypothesis_step2_runjobs.py calls nullhypothesis_step2_runme.py to calculate linear response curves with these STA data. nullhypothesis_step3.py takes the 95 percent upper bound of these curves as the final null hypothesis test curve and writes it into the linear response curve data file.
+To calculate the null hypothesis test curve, ``nullhypothesis_runjobs.py`` in ```~/Code_git/transferit/``` calls ``nullhypothesis_runme.py``. In each job, it reproduces the stimuli and loads corresponding spike time lists. Adding a different random number to each spike time list shuffles spike times. STA data are calculated with the stimuli and new spike time lists. ``nullhypothesis_step2_runjobs.py`` calls ``nullhypothesis_step2_runme.py`` to calculate dynamic gain functions with these STA data. ``nullhypothesis_step3.py`` takes the 95 percent upper bound of these curves as the final null hypothesis test curve and writes it into the dynamic gain function data file.
 
+1. Go to direcotry ```~/Code_gwdg/transferit```. Use ``bootstrapping_runjobs.py``, ``bootstrapping_runme.py`` and ``runme.sh`` to submit jobs to the clusters and calculate 1000 dynamic gain functions. Please change the hostname in ``bootstrapping_runjobs.py`` and ``runme.sh``.
 
+Type the following command to submit jobs:
+```
+python bootstrapping_runjobs.py
+```
+
+2. When the simulation in 1 is finished, use ``bootstrapping_step2.py`` to calculate the bootstrapping confidence interval and save the data.
+Type the following command to submit jobs:
+```
+python bootstrapping_step2.py
+```
