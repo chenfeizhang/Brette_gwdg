@@ -24,7 +24,7 @@ Here ```/scratch/username/nrn``` is the directory of the virtual environment.
 Download the code folder ``Code_gwdg`` to your home directory.
 ### 1. Activate the virtual environment and compile the neuron model
 1. Activate the virtual environment.
-2. Go to the model directroy ```cd ~/Code_gwdg/Models/Brette```. Compile the model with the command ```nrnivmodl```, then you will get the folde ``x86_64``. If you get the code from somewhere else, the folde ``x86_64`` may already exist. Please delete the folder and compile the code to get your own folder``x86_64``.
+2. Go to the model directroy ```cd ~/Code_gwdg/Models/Brette```. Compile the model with the command ```nrnivmodl```, then you will get the folde ``x86_64``. If you get the code from somewhere else, the folder ``x86_64`` may already exist. Please delete the folder and compile the code to get your own folder``x86_64``.
 
 ### Note: All the following steps are executed in the virtual environment. 
 
