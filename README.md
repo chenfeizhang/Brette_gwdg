@@ -142,4 +142,36 @@ Type the following command to submit jobs:
 python bootstrapping_step3.py
 ```
 
-### 5. Electrotonic Filtering and Sodium Activation Variable under Voltage Clamp.
+### 5. Electrotonic Filtering and Sodium Activation Variable under Voltage Clamp at the Soma.
+
+To calculate the electrotonic filtering of the stimulus when transmitted from the soma to the AP initiation site, a neuron model is created with the sodium conductance set to 0. For exmaple, ``Brette_soma10_0Na`` in ``~/Code_git/Models`` refers to a passive Brette's model with a soma diameter of 10um. Injecting the soma with the stochastic stimulus which is used to calculate the dynamic gain function together with a sinusoidal current which has an amplitude of 0.1 of std. For each sinusoidal frequency, we simulated 100 pieces of 1s of axonal voltage. The average of the Fourier transform of the 1s axonal voltages at corresponding sinusoidal frequency, divided by the sinusoidal amplitude, is the electrotonic filtering at that frequency.
+
+1. Go to direcotry ```~/Code_gwdg/runjobs```. Use ``runjobs_subthreshold_freq.py``, ``runme_subthreshold_freq.py`` and ``runme.sh`` to submit jobs to the clusters.
+
+Type the following command to submit jobs:
+```
+python runjobs_subthreshold_freq.py
+```
+
+2. When the simulation in 1 is finished, use ``runjobs_subthreshold_freq_step2.py`` to collect and save the data.
+
+Type the following command to submit jobs:
+```
+python runjobs_subthreshold_freq_step2.py
+```
+
+To calculate the sodium activation variable under voltage clamp at the soma, we fixed the somatic voltage at different values for 1s and recorded the stationary value of sodium activation variable. Here the reset threshold was set to 60mV to avoid AP generation.
+
+1. Go to direcotry ```~/Code_gwdg/runjobs```. Use ``VClamp_runjobs.py``, ``VClamp_runme.py`` and ``runme.sh`` to submit jobs to the clusters.
+
+Type the following command to submit jobs:
+```
+python VClamp_runjobs.py
+```
+
+2. When the simulation in 1 is finished, use ``VClamp_step2.py`` to collect and save the data.
+
+Type the following command to submit jobs:
+```
+python VClamp_step2.py
+```
