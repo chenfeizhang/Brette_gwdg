@@ -73,13 +73,33 @@ Type the following command to save the data:
 ```
 python param_step3.py
 ```
+
+6. Write the the mean and the std of stimulus manually into the txt file ``IparamTable.txt`` in ```~/Code_gwdg/Models/Brette```.
+
 ### 3. Calculate Dynamic Gain Functions.
 
-Linear response curves of Brette model is calculated by Fourier transform of spike triggered average (STA) divided by power spetral density of stochastic stimulus. In ```~/Code_git/runjobs```, runjobs.py calls runme.py to generate 400 pieces of STA data for given neuron model and stochastic stimulus. Each piece of STA data is an average of about 5000 pieces of stimulus centered at their spike times. Final STA for linear response curve calculation is an average of these 400 pieces of STA data. addparam.py in ```~/Code_git/scripts``` provides the function for loading parameters from ``IparamTable.txt``.
+Dynamic gain functions of Brette's model are calculated by the Fourier transform of spike triggered average (STA) divided by the power spetral density of stochastic stimulus. In ```~/Code_git/runjobs```, runjobs.py calls runme.py to generate 400 pieces of STA. Each piece of STA is an average of about 5000 pieces of stochastic stimuli centered at their spike times. The final STA of the dynamic gain function is an average of these 400 pieces of STA. ``addparam.py`` in ```~/Code_git/scripts``` provides the function for loading parameters from ``IparamTable.txt``. ``runjobs_desktop.py`` and ``runme_desktop.py`` provides a desktop version of the code. With these two script, one can generate a small fraction of STA data and obtain a preliminary linear response curve.
 
-runjobs_desktop.py and runme_desktop.py provides a desktop version of the code. With these two script, one can generate a small fraction of STA data and obtain a preliminary linear response curve.
+``transferit.py`` in ```~/Code_git/transferit``` provides the function ``STA_average`` for calculating the final STA and the function for calculating dynamic gain functions. STA_average is also used for averaging randomly sampled STA data to calculate bootstrapping confidence interval. In function gain, STA is first suppressed to zero at its two ends before Fourier transform. For Fourier transform, the STA is cut from the middle and attaches its two ends.  
 
-transferit.py in ```~/Code_git/transferit``` provides function STA_average for averaging STA data and function gain for calculating linear response curve. STA_average is also used for averaging random STA sampling in bootstrapping. In function gain, STA is first suppressed to zero at its two ends before Fourier transform. For Fourier transform, the STA is cut from the middle and attaches its two ends.  
+1. Go to direcotry ```~/Code_gwdg/runjobs```. Use ``runjobs.py``, ``runme.py`` and ``runme.sh`` to submit jobs to the clusters and calculate 400 pieces of STA. Please change the hostname in ``runjobs.py`` and ``runme.sh``.
+
+Type the following command to submit jobs:
+```
+python runjobs.py
+```
+
+Or type the following command to run small jobs on the desktop:
+```
+python runjobs_desktop.py
+```
+
+2. When the simulation in 1 is finished, go to direcotry ```~/Code_gwdg/transferit```. Use ``transferit.py`` to calculate the dynamic gain function.
+
+Type the following command to submit jobs:
+```
+python transferit.py
+```
 
 ### 4. Bootstrapping Confidence Interval and Null Hypothesis Test.
 
